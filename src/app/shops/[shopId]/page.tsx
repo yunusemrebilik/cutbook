@@ -15,9 +15,10 @@ async function getShop(shopId: string) {
 }
 
 export default async function ShopPage({ params }: ShopPageProps) {
-  const shop = await getShop(params.shopId);
+  const { shopId } = await params;   //
+  const shop = await getShop(shopId);
 
-  if (!shop) return notFound();
+  if (!shop) notFound(); // Next.js built-in 404
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">

@@ -39,11 +39,12 @@ const mockShops: Record<string, any> = {
 
 export async function GET(
   request: Request,
-  { params }: { params: { shopId: string } }
+  { params }: { params: Promise<{ shopId: string }> }
 ) {
   await new Promise(r => setTimeout(r, 800)); // Simulate network delay
 
-  const shop = mockShops[params.shopId];
+  const { shopId } = await params;
+  const shop = mockShops[shopId];
 
   if (!shop) {
     return NextResponse.json({ error: "Shop not found" }, { status: 404 });
